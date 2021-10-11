@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RetroShop - Mon panier{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<section class="container_cart">
+
+    {% if items | length > 0 %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Produit</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                    <th>Total</th>
+                    <th></th>
+            </thead>
+            <tbody>
+
+            {% for item in items %}
+                    <tr>
+                        <th>
+                            <img src="{{ vich_uploader_asset(item.product, 'imageFile') | imagine_filter('my_thumb') }}" alt="{{ item.product.name}}">
+                        </th>
+                        <td>{{item.product.name}}</td>
+                        <td>{{item.product.price}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{item.product.price * item.quantity}}</td>
+                        <td><a href="{{path('cart_remove',{'id':item.product.id})}}" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                        </a></td>
+                        
+                    </tr>
+                {% endfor %}
+                
+            </tbody>
+            
+        </table>
+        <div>
+            {{ knp_pagination_render(items) }}
+            </div>
+        <div class="text-right mb-5">
+            <b>Total de mon panier :</b> {{ total}}€<br>
+            <a href="{{ path('purchase_validator',{ 'id' : purchase.id  }) }}" class="btn btn-success btn-block mt-3 mr-6">Valider mon panier</a>
+        </div>
+    {% else %}
+        <p>Vous n'avez rien dans votre panier </p>
+    {% endif %}
+</section>
+
+{% endblock %}

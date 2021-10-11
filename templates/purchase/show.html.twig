@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RetroShop - Commandes{% endblock %}
+
+{% block body %}
+    <section class="container_commandes">
+        <div class="commandes">
+        
+            <h1>Commandes</h1>
+            
+            {% for cmds in callOnService %}
+                {% if cmds.purchase.status == "panier" %}
+                {% else %}
+                <div class="comm">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Numéro de la commande</th>
+                                <td>{{ cmds.purchase.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date de la commande</th>
+                                <td>{{ cmds.purchase.createdAt ? cmds.purchase.createdAt|date('d-m-Y H:i') : '' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td>{{ cmds.purchase.status }}</td>
+                            </tr>
+                            <tr>
+                                <th>Total</th>
+                                <td>{{ cmds.purchase.total }}€</td>
+                            </tr>
+                            {# <tr>
+                                <th>Référence achat</th>
+                                <td>{{ cmds.purchase.idStripe }}</td>
+                            </tr> #}
+                            
+                        </tbody>
+                        
+                    </table>
+
+                    {% for pan in cmds.cart %}
+                        <div>
+                            <p>{{ pan.product.name }}, quantity : {{ pan.quantity  }}, {{pan.product.price}}€/u</p>
+                            
+                        </div>
+                    {% endfor %}
+                     
+                </div>
+                {% endif %} 
+            {% endfor %}
+        </div>
+
+        <div class="stats">
+            {% if is_granted('ROLE_ADMIN') %}
+                
+                <h1>Stats</h1>
+            
+                {{ render_chart(chartMixed) }}
+            
+             
+            {% endif %}
+        </div>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            
+            <button><a href="{{path('purchase_historyMonth')}}">Voir les stats du mois</a></button>
+
+            <button><a href="{{path('purchase_historyYear')}}">Voir les stats de l'année</a></button>
+            
+        {% endif %}
+        
+
+    </section>
+
+{% endblock %}

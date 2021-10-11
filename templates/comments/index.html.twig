@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RetroShop - Commentaire{% endblock %}
+
+{% block body %}
+    <section class="container_comment">
+
+        {% if is_granted("ROLE_ADMIN") %}
+            
+            <div class="comment_user">
+            
+                <h1>Tous les commentaires</h1>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nom Utilisateur</th>
+                            <th>Nom du produit</th>
+                            <th>Commentaire</th>
+                            <th>Date de publication</th>
+                            <th>Note</th>
+                            <th>Status Commentaire</th>
+                            <th>Autorisé</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for comment in comments %}
+                     
+                        {% if comment.moderate is not defined %}
+                        <tr>
+                            <td>{{ comment.user.username}}</td>
+                            <td>{{ comment.article.name}}</td>
+                            <td>{{ comment.content }}</td>
+                            <td>{{ comment.createdAt ? comment.createdAt|date('d-m-Y H:i') : '' }}</td>
+                            <td>{{ comment.note }}</td>
+                            <td>{{ comment.moderate }}</td>
+                            <td> 
+                                <button><a href="{{ path('comments_index', {'id': comment.id,'moderate': true}) }}">Validé</a></button>
+                                <button><a href="{{ path('comments_index', {'id': comment.id,'moderate': false}) }}">Refuser</a></button>
+                            </td>
+                            {# <td>
+                                <button><a href="{{ path('comments_show', {'id': comment.id}) }}">En savoir plus</a></button>
+                            </td> #}
+                        </tr>
+             
+                        {% else %}
+                            {# <tr>
+                                <td colspan="6">no records found</td>
+                            </tr> #}
+                        {% endif %}
+                        
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {# <a href="{{ path('comments_new') }}">Create new</a> #}
+            </div>
+            
+        {% endif %}
+    </section>
+{% endblock %}

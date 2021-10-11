@@ -1,0 +1,27 @@
+// taille et typo
+:root{
+    --app-p : 0.9em;
+    --app-button : 1.2em;
+    --app-prix : 1.8em;
+    --app-nom-produit : 2.1em;
+    --app-catch : 3.9em;
+    --app-gros-titre : 12.5em;
+
+    // RESPONSIVE TABLETTE à PC
+    --app-gros-titreT : 6em;
+    --app-catchT : 2.2em;
+    --app-pT: 0.8em
+}
+
+$font-family-serif: 'Abril Fatface', Georgia, "Times New Roman", Times, serif !default;
+$font-sans-serif-alternative : Roboto, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+
+h1 {
+    font-family: $font-family-serif !important;
+
+}
+
+h3 {
+    font-family: $font-family-serif !important;
+}

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RetroShop - Stats de l'année{% endblock %}
+
+{% block body %}
+    
+    {% if app.user.roles[1] is defined%}
+    {% if app.user.roles[1]%}
+    
+    {{ render_chart(chart) }}
+    
+    {% endif %}
+    {% endif %}
+
+    <p>Total des ventes sur les 12 derniers mois : {{ superTotal }}</p>
+
+    <button class="year"><a href="{{path('purchase_history_admin')}}">Revenir à la page commande</a></button>
+{% endblock %}
